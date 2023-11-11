@@ -11,22 +11,20 @@ const Tech = () => {
         <p className={`${styles.sectionSubText}`}>What I know so far</p>
         <h2 className={`${styles.sectionHeadText}`}>My Skills</h2>
       </motion.div>
-      <div className="w-full flex ">
-        <div className="flex flex-row w-3/5 flex-wrap justify-center gap-3">
-          {technologies.map((technology) => {
-            return (
-              <div className="" key={technology.name}>
-                <div className="w-full green-pink-gradient p-[1px] rounded-[10px] shadow-card">
-                  <div className="bg-tertiary rounded-[10px] py-2.5 px-5 min-h-[32px] flex justify-between items-center flex-col">
-                    <h3 className="text-white text-[20px] font-bold text-center">
-                      {technology.name}
-                    </h3>
-                  </div>
+      <div className="flex flex-row w-full flex-wrap justify-center gap-3">
+        {technologies.map((technology) => {
+          return (
+            <div className="" key={technology.name}>
+              <div className="w-full green-pink-gradient p-[1px] rounded-[10px] shadow-card">
+                <div className="bg-tertiary rounded-[10px] py-2.5 px-5 min-h-[32px] flex justify-between items-center flex-col">
+                  <h3 className="text-white text-[20px] font-bold text-center">
+                    {technology.name}
+                  </h3>
                 </div>
               </div>
-            );
-          })}
-        </div>
+            </div>
+          );
+        })}
       </div>
     </>
   );
