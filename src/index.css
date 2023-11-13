@@ -33,6 +33,69 @@
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
+.instagram-gradient {
+  background: #833ab4; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #833ab4,
+    #fd1d1d,
+    #ff8c00
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #833ab4,
+    #fd1d1d,
+    #ff8c00
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.linkedin-gradient {
+  background: #0077b5; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #0077b5,
+    #00a0dc
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #0077b5,
+    #00a0dc
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.github-gradient {
+  background: #24292e; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #24292e,
+    #34d058
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #24292e,
+    #34d058
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.download-button {
+  background: rgb(111, 110, 131);
+  background: linear-gradient(
+    90deg,
+    rgba(111, 110, 131, 0.7036064425770308) 0%,
+    rgba(186, 186, 199, 0.7) 57%,
+    rgba(149, 215, 228, 0.7) 100%
+  );
+}
+.download-button:hover {
+  background: rgb(103, 101, 145);
+  background: linear-gradient(
+    90deg,
+    rgba(103, 101, 145, 0.7036064425770308) 0%,
+    rgba(146, 146, 207, 0.7) 57%,
+    rgba(127, 187, 199, 0.7) 100%
+  );
+}
+
 .violet-gradient {
   background: #804dee;
   background: linear-gradient(-90deg, #804dee 0%, rgba(60, 51, 80, 0) 100%);
