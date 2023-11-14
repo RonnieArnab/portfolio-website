@@ -42,7 +42,7 @@ const Hero = () => {
       gradientClass: "instagram-gradient",
       altText: "Instagram",
       linkClass: "instagram",
-      mediaLink: "https://www.linkedin.com/in/arnab-ghosh-828210283/",
+      mediaLink: "https://www.instagram.com/arnabghosssh/",
     },
     {
       icon: linkedin,
