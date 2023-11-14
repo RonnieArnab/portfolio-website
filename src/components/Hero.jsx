@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
 
 import { styles } from "../styles";
-import { download, githubLink, instagram, linkedin, resume } from "../assets";
+import { download, resume } from "../assets";
 import { Tilt } from "react-tilt";
 import PropTypes from "prop-types";
+import { socialData } from "../constants";
 
 const SocialIcon = ({ icon, gradientClass, altText, linkClass, mediaLink }) => (
   <Tilt>
@@ -36,30 +37,6 @@ SocialIcon.propTypes = {
 };
 
 const Hero = () => {
-  const socialData = [
-    {
-      icon: instagram,
-      gradientClass: "instagram-gradient",
-      altText: "Instagram",
-      linkClass: "instagram",
-      mediaLink: "https://www.instagram.com/arnabghosssh/",
-    },
-    {
-      icon: linkedin,
-      gradientClass: "linkedin-gradient",
-      altText: "LinkedIn",
-      linkClass: "linkedin",
-      mediaLink: "https://www.linkedin.com/in/arnab-ghosh-828210283/",
-    },
-    {
-      icon: githubLink,
-      gradientClass: "github-gradient",
-      altText: "GitHub",
-      linkClass: "github",
-      mediaLink: "https://github.com/RonnieArnab",
-    },
-  ];
-
   return (
     <section className="relative w-full h-screen mx-auto">
       <div
@@ -103,8 +80,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-
-      {/* <ComputersCanvas /> */}
       <div className="absolute xs:bottom-10 bottom-32 w-full flex justify-center items-center">
         <a href="#about">
           <div className="w-[30px] h-[55px] rounded-3xl border-4 border-secondary flex justify-center items-start p-2 ">
