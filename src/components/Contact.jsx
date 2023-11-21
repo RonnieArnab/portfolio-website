@@ -5,6 +5,8 @@ import { styles } from "../styles";
 import { EarthCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
 import { slideIn } from "../utils/motion";
+import useAlert from "../hooks/useAlert";
+import Alert from "./Alert";
 
 const Contact = () => {
   const formRef = useRef();
@@ -13,6 +15,8 @@ const Contact = () => {
     email: "",
     message: "",
   });
+
+  const { alert, showAlert, hideAlert } = useAlert();
 
   const [loading, setLoading] = useState(false);
 
@@ -42,7 +46,12 @@ const Contact = () => {
       .then(
         () => {
           setLoading(false);
-          alert("Thank you . I will get back to you as soon as possible.");
+          showAlert("Message sent successfully", "success");
+          console.log(alert.type);
+
+          setTimeout(() => {
+            hideAlert();
+          }, [3000]);
 
           setForm({
             name: "",
@@ -53,13 +62,14 @@ const Contact = () => {
         (error) => {
           setLoading(false);
           console.log(error);
-          alert("Something went wrong");
+          showAlert("I didnt receive tour message", "danger");
         }
       );
   };
 
   return (
     <div className="xl:mt-12 xl:flex-row flex-col-reverse flex gap-10 overflow-hidden ">
+      {alert.show && <Alert {...alert} />}
       <motion.div
         className="flex-[0.75] bg-black-100 p-8 rounded-2xl"
         variants={slideIn("left", "between", 0.2, 1)}>
@@ -112,7 +122,6 @@ const Contact = () => {
           </button>
         </form>
       </motion.div>
-
       <motion.div
         className="xl:flex-1 xl:h-auto md:h-[550px] h-[350px]"
         variants={slideIn("right", "between", 0.2, 1)}>
