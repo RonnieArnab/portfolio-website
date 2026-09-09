@@ -1,35 +1,57 @@
-import { BrowserRouter } from "react-router-dom";
+import { useEffect } from "react";
+import { AnimatePresence, MotionConfig } from "framer-motion";
+import { GameProvider, useGame } from "./state/GameContext.jsx";
+import TitleScreen from "./scenes/TitleScreen.jsx";
+import Overworld from "./scenes/Overworld.jsx";
+import GymScene from "./scenes/GymScene.jsx";
+import BadgeCase from "./scenes/BadgeCase.jsx";
+import RosterScreen from "./scenes/RosterScreen.jsx";
+import ResumeMode from "./scenes/ResumeMode.jsx";
 
-import {
-  About,
-  Contact,
-  Experience,
-  Hero,
-  Navbar,
-  StarsCanvas,
-  Tech,
-  Works,
-} from "./components";
+function AppInner() {
+  const { state, dispatch } = useGame();
 
-const App = () => {
+  // Global hotkeys
+  useEffect(() => {
+    const onKey = (e) => {
+      const k = e.key.toLowerCase();
+      if (k === "m" && state.scene === "overworld") {
+        dispatch({ type: "GOTO", scene: "badges" });
+      } else if (k === "m" && state.scene === "badges") {
+        dispatch({ type: "BACK_TO_WORLD" });
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [state.scene, dispatch]);
+
+  if (state.scene === "title") return <TitleScreen />;
+
   return (
-    <BrowserRouter>
-      <div className="relative z-0 bg-primary">
-        <div className="bg-hero-pattern bg-cover bg-no-repeat bg-center">
-          <Navbar />
-          <Hero />
-        </div>
-        <About />
-        <Experience />
-        <Tech />
-        <Works />
-        <div className="relative z-0">
-          <Contact />
-          <StarsCanvas />
-        </div>
-      </div>
-    </BrowserRouter>
-  );
-};
+    <div className="relative min-h-full">
+      <Overworld />
 
-export default App;
+      <AnimatePresence>
+        {state.scene === "gym" && <GymScene key="gym" />}
+        {state.scene === "badges" && <BadgeCase key="badges" />}
+        {state.scene === "roster" && <RosterScreen key="roster" />}
+      </AnimatePresence>
+
+      {state.scene === "resume" && (
+        <div className="fixed inset-0 z-50">
+          <ResumeMode />
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <MotionConfig reducedMotion="user">
+      <GameProvider>
+        <AppInner />
+      </GameProvider>
+    </MotionConfig>
+  );
+}
