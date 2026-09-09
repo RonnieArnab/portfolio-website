@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Float, Environment } from "@react-three/drei";
+import { OrbitControls, Float } from "@react-three/drei";
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
@@ -135,10 +135,10 @@ export default function Showcase({ kind = "crystal", color = "#f5c542", reducedM
   return (
     <div className="h-48 w-full sm:h-56">
       <Canvas camera={{ position: [0, 0.6, 4], fov: 45 }} dpr={[1, 1.8]}>
-        <ambientLight intensity={0.6} />
-        <directionalLight position={[3, 4, 2]} intensity={1.1} castShadow />
-        <directionalLight position={[-3, 1, -2]} intensity={0.35} color="#8bd" />
-        <Environment preset="city" />
+        <hemisphereLight args={["#ffffff", "#4a4636", 0.9]} />
+        <directionalLight position={[3, 4, 2]} intensity={1.4} castShadow />
+        <directionalLight position={[-3, 1, -2]} intensity={0.5} color="#8bd" />
+        <pointLight position={[0, 1, 3]} intensity={8} distance={12} />
         <Float
           speed={reducedMotion ? 0 : 1.4}
           rotationIntensity={reducedMotion ? 0 : 0.4}

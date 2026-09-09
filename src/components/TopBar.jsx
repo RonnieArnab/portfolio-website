@@ -28,6 +28,13 @@ export default function TopBar() {
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-30 flex items-start justify-between gap-2 p-3">
       <div className="pointer-events-auto flex items-center gap-2 bg-ink/85 border-2 border-parchment/40 px-3 py-2">
+        <a
+          href="/"
+          title="Back to the main profile"
+          className="font-pixel text-[9px] uppercase text-parchment/60 hover:text-badge"
+        >
+          ◀
+        </a>
         <span className="font-pixel text-[9px] uppercase text-badge">
           Arnab's Journey
         </span>

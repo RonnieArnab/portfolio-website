@@ -1,18 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 24 24" shape-rendering="crispEdges">
-  <rect width="24" height="24" fill="#1c3a5e"/>
-  <rect x="3" y="19" width="18" height="5" fill="#132741"/>
-  <!-- hair -->
-  <rect x="7" y="4" width="10" height="4" fill="#221812"/>
-  <rect x="6" y="5" width="2" height="6" fill="#221812"/>
-  <rect x="16" y="5" width="2" height="6" fill="#221812"/>
-  <!-- face -->
-  <rect x="8" y="6" width="8" height="8" fill="#e8b98c"/>
-  <!-- glasses -->
-  <rect x="8" y="9" width="3" height="2" fill="#0e1a2b"/>
-  <rect x="13" y="9" width="3" height="2" fill="#0e1a2b"/>
-  <rect x="11" y="9" width="2" height="1" fill="#0e1a2b"/>
-  <!-- shirt -->
-  <rect x="6" y="14" width="12" height="6" fill="#1f3b63"/>
-  <rect x="6" y="14" width="12" height="1" fill="#2f5488"/>
-  <text x="12" y="23" font-family="monospace" font-size="2" fill="#7f9bbd" text-anchor="middle">ADD PHOTO</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFD9C2"/>
+      <stop offset="0.45" stop-color="#FFB9BC"/>
+      <stop offset="1" stop-color="#C9A7FF"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="38%" r="52%">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="400" height="500" fill="url(#bg)"/>
+  <rect width="400" height="500" fill="url(#glow)"/>
+
+  <!-- soft floating shapes, echoing the 3D background -->
+  <circle cx="62" cy="96" r="34" fill="#ffffff" opacity="0.32"/>
+  <circle cx="342" cy="150" r="20" fill="#ffffff" opacity="0.25"/>
+  <circle cx="318" cy="60" r="10" fill="#ffffff" opacity="0.4"/>
+
+  <!-- avatar silhouette -->
+  <g transform="translate(200 175)">
+    <circle cx="0" cy="0" r="86" fill="#ffffff" opacity="0.55"/>
+    <circle cx="0" cy="-22" r="34" fill="#17140F" opacity="0.72"/>
+    <path d="M-56 62a56 56 0 0 1 112 0z" fill="#17140F" opacity="0.72"/>
+  </g>
+
+  <text x="200" y="300" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="19" font-weight="600"
+        fill="#17140F" opacity="0.6">Add your photo</text>
+  <text x="200" y="324" text-anchor="middle"
+        font-family="Inter, system-ui, sans-serif" font-size="12.5"
+        fill="#17140F" opacity="0.4">public/assets/ → PROFILE.photo</text>
 </svg>

@@ -1,9 +1,9 @@
 {
-  "name": "arnabs-journey",
+  "name": "arnab-portfolio",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
-  "description": "Arnab Ghosh's portfolio, built as a top-down Pokemon-style RPG.",
+  "description": "Arnab Ghosh's portfolio: a dating-app-style profile with an AI wingman, plus a playable RPG easter egg at /rpg.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.124.0",
     "@react-three/drei": "^9.88.2",
     "@react-three/fiber": "^8.14.5",
     "framer-motion": "^10.16.4",
