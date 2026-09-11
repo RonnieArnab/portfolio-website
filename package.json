@@ -1,24 +1,22 @@
 {
-  "name": "arnabs-journey",
+  "name": "arnab-portfolio",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
-  "description": "Arnab Ghosh's portfolio, built as a top-down Pokemon-style RPG.",
+  "description": "A personal engineering portfolio with project stories, experience, a travel gallery, and a résumé-grounded AI assistant.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test tests/*.test.js"
   },
   "dependencies": {
-    "@react-three/drei": "^9.88.2",
-    "@react-three/fiber": "^8.14.5",
+    "@anthropic-ai/sdk": "^0.124.0",
     "framer-motion": "^10.16.4",
-    "howler": "^2.2.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.16.0",
-    "three": "^0.157.0"
+    "react-router-dom": "^6.16.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

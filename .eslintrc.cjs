@@ -19,10 +19,10 @@ module.exports = {
   },
   overrides: [
     {
-      // react-three-fiber uses lowercase Three.js element props that the DOM
-      // linter doesn't recognise.
-      files: ["src/three/**/*.jsx"],
-      rules: { "react/no-unknown-property": "off" },
+      // Vercel serverless functions run on Node, not in the browser.
+      files: ["api/**/*.js", "tests/**/*.js"],
+      env: { node: true, browser: false },
     },
+
   ],
 };

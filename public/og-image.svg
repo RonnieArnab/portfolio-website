@@ -1,28 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="'Courier New', monospace">
-  <defs>
-    <radialGradient id="bg" cx="30%" cy="25%" r="90%">
-      <stop offset="0" stop-color="#1c3a5e"/>
-      <stop offset="0.7" stop-color="#0e1a2b"/>
-    </radialGradient>
-    <pattern id="scan" width="7" height="7" patternUnits="userSpaceOnUse">
-      <rect width="7" height="2" fill="#ffffff" opacity="0.06"/>
-    </pattern>
-  </defs>
-  <rect width="1200" height="630" fill="url(#bg)"/>
-  <rect width="1200" height="630" fill="url(#scan)"/>
-
-  <text x="82" y="118" fill="#f5c542" font-size="20" letter-spacing="6" font-weight="bold">A PORTFOLIO YOU CAN PLAY</text>
-  <text x="78" y="240" fill="#f4ecd8" font-size="96" font-weight="bold">ARNAB'S <tspan fill="#f5c542">JOURNEY</tspan></text>
-  <text x="82" y="330" fill="#d9d2bd" font-size="38">Walk the Devroot Region. Challenge six career-milestone</text>
-  <text x="82" y="382" fill="#d9d2bd" font-size="38">gyms. Collect the badges.</text>
-  <text x="82" y="520" fill="#7f9bbd" font-size="17" letter-spacing="2" font-weight="bold">ARNAB GHOSH — SOFTWARE ENGINEER · GENAI</text>
-
-  <g transform="translate(690,470)">
-    <g transform="translate(0,0) scale(2.4)"><polygon points="12,1 15,4 20,4 20,9 23,12 20,15 20,20 15,20 12,23 9,20 4,20 4,15 1,12 4,9 4,4 9,4" fill="#a78bfa" stroke="#0e1a2b" stroke-width="1.5"/></g>
-    <g transform="translate(72,0) scale(2.4)"><polygon points="12,1 15,4 20,4 20,9 23,12 20,15 20,20 15,20 12,23 9,20 4,20 4,15 1,12 4,9 4,4 9,4" fill="#fb923c" stroke="#0e1a2b" stroke-width="1.5"/></g>
-    <g transform="translate(144,0) scale(2.4)"><polygon points="12,1 15,4 20,4 20,9 23,12 20,15 20,20 15,20 12,23 9,20 4,20 4,15 1,12 4,9 4,4 9,4" fill="#22d3ee" stroke="#0e1a2b" stroke-width="1.5"/></g>
-    <g transform="translate(216,0) scale(2.4)"><polygon points="12,1 15,4 20,4 20,9 23,12 20,15 20,20 15,20 12,23 9,20 4,20 4,15 1,12 4,9 4,4 9,4" fill="#60a5fa" stroke="#0e1a2b" stroke-width="1.5"/></g>
-    <g transform="translate(288,0) scale(2.4)"><polygon points="12,1 15,4 20,4 20,9 23,12 20,15 20,20 15,20 12,23 9,20 4,20 4,15 1,12 4,9 4,4 9,4" fill="#4ade80" stroke="#0e1a2b" stroke-width="1.5"/></g>
-    <g transform="translate(360,0) scale(2.4)"><polygon points="12,1 15,4 20,4 20,9 23,12 20,15 20,20 15,20 12,23 9,20 4,20 4,15 1,12 4,9 4,4 9,4" fill="#fb7185" stroke="#0e1a2b" stroke-width="1.5"/></g>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="Arial, sans-serif">
+  <rect width="1200" height="630" fill="#faf8f5"/>
+  <rect x="72" y="72" width="1056" height="486" rx="28" fill="#f1eaf3"/>
+  <text x="120" y="152" fill="#6c6067" font-size="22" letter-spacing="2">ARNAB GHOSH · SOFTWARE ENGINEER, GENAI</text>
+  <text x="116" y="280" fill="#382b35" font-size="76" font-weight="bold">Good at code.</text>
+  <text x="116" y="374" fill="#765c70" font-size="76" font-weight="bold">Better in a team.</text>
+  <text x="120" y="453" fill="#6c6067" font-size="26">Production AI systems. Thoughtful engineering. A curious mind.</text>
+  <rect x="120" y="489" width="240" height="6" rx="3" fill="#f7d568"/>
 </svg>

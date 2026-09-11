@@ -7,7 +7,7 @@ export const PROFILE = {
   email: "as920037.arnabghosh@gmail.com",
   // Replace the placeholder: drop a square photo in public/assets/ and point
   // this at it, e.g. "/assets/trainer-photo.jpg".
-  photo: "/assets/trainer-photo.svg",
+  photo: "/assets/gallery/beach.jpg",
   resume: "/resume.pdf",
 };
 
