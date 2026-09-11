@@ -1,261 +1,63 @@
-import { Suspense, lazy, useCallback, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Ico from "./Ico.jsx";
 import AgentChat from "./AgentChat.jsx";
 import MatchOverlay from "./MatchOverlay.jsx";
-import {
-  HeroCard,
-  VitalsCard,
-  PromptCard,
-  ProjectCard,
-  ExperienceCard,
-  SkillsCard,
-  EducationCard,
-  SecretCard,
-} from "./Cards.jsx";
-import { CARDS, HEADER, CONTACT } from "../data/profile.js";
+import PhotoGallery from "./PhotoGallery.jsx";
+import { ProjectStories, CareerTimeline } from "./CareerStory.jsx";
+import SkillsOverview from "./SkillsOverview.jsx";
+import { HEADER, CONTACT } from "../data/profile.js";
+import "../styles/profile-v3.css";
 
-const AmbientScene = lazy(() => import("../three/AmbientScene.jsx"));
-
-const PASS_LINES = [
-  "Ouch. Want to reconsider?",
-  "Bold. He does exactly-once processing, you know.",
-  "Still here though? Thought so.",
-  "Fine — but the RPG at the bottom is genuinely fun.",
+const PROMPTS = [
+  { question: "My love language is…", answer: "Making the complicated feel effortless.", detail: "Whether that's a reliable AI pipeline, a thoughtful interface, or a travel plan that finally escapes the group chat." },
+  { question: "I geek out on…", answer: "Thoughtful systems. Unfamiliar places.", detail: "I like understanding how things work, whether that means exploring a new city or untangling a tricky workflow." },
+  { question: "We'll get along if…", answer: "You care about what happens after the demo.", detail: "The retries, the validation, the edge cases. That's where a promising AI idea becomes a product people can depend on." },
+  { question: "My ideal weekend…", answer: "Somewhere new, with a story to bring home.", detail: "A skyline, a beach, a sunset walk. A little curiosity goes a long way." },
 ];
-
 export default function ProfileApp() {
   const reduced = useReducedMotion();
-  const [liked, setLiked] = useState(() => new Set());
-  const [sheet, setSheet] = useState(null); // null | "chat" | "match"
-  const [matchLabel, setMatchLabel] = useState(null);
-  const [passIdx, setPassIdx] = useState(-1);
-  const [scrolled, setScrolled] = useState(false);
-
+  const [sheet, setSheet] = useState(null);
+  const [label, setLabel] = useState(null);
+  const [prompt, setPrompt] = useState(0);
+  const [nav, setNav] = useState("discover");
+  const [likes, setLikes] = useState([]);
+  const swipe = useRef(null);
   useEffect(() => {
-    document.body.classList.remove("rpg-mode");
-    const onScroll = () => setScrolled(window.scrollY > 320);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (visible[0]) setNav(visible[0].target.id);
+    }, { rootMargin: "-10% 0px -55% 0px" });
+    document.querySelectorAll("main > section[id]").forEach(section => observer.observe(section));
+    return () => observer.disconnect();
   }, []);
-
-  const like = useCallback((cardId, label) => {
-    setLiked((s) => new Set(s).add(cardId));
-    setMatchLabel(label);
-    setSheet("match");
-  }, []);
-
-  const pass = () => setPassIdx((i) => (i + 1) % PASS_LINES.length);
-
-  useEffect(() => {
-    if (passIdx < 0) return;
-    const t = setTimeout(() => setPassIdx(-1), 2600);
-    return () => clearTimeout(t);
-  }, [passIdx]);
-
-  const renderCard = (card) => {
-    const onLike = (label) => like(card.id, label);
-    const isLiked = liked.has(card.id);
-
-    switch (card.kind) {
-      case "hero":
-        return <HeroCard onLike={onLike} liked={isLiked} />;
-      case "vitals":
-        return <VitalsCard />;
-      case "prompt":
-        return (
-          <PromptCard
-            prompt={card.prompt}
-            answer={card.answer}
-            onLike={onLike}
-            liked={isLiked}
-          />
-        );
-      case "project":
-        return (
-          <ProjectCard
-            project={card.project}
-            blurb={card.blurb}
-            onLike={onLike}
-            liked={isLiked}
-          />
-        );
-      case "experience":
-        return (
-          <ExperienceCard
-            company={card.company}
-            role={card.role}
-            dates={card.dates}
-            floors={card.floors}
-            onLike={onLike}
-            liked={isLiked}
-          />
-        );
-      case "skills":
-        return <SkillsCard groups={card.groups} />;
-      case "education":
-        return (
-          <EducationCard
-            school={card.school}
-            degree={card.degree}
-            dates={card.dates}
-            stat={card.stat}
-          />
-        );
-      case "secret":
-        return (
-          <SecretCard
-            prompt={card.prompt}
-            answer={card.answer}
-            cta={card.cta}
-            href={card.href}
-          />
-        );
-      default:
-        return null;
-    }
-  };
-
-  return (
-    <div className="relative min-h-full">
-      {/* 3D atmosphere — background only, deliberately faint */}
-      <div className="pointer-events-none fixed inset-0 z-0 opacity-[0.55]">
-        <Suspense fallback={null}>
-          <AmbientScene reduced={!!reduced} />
-        </Suspense>
-      </div>
-      <div className="pointer-events-none fixed inset-0 z-0 bg-gradient-to-b from-cream/80 via-cream/60 to-cream/90" />
-      {/* keeps the centre column clean on wide screens */}
-      <div className="pointer-events-none fixed inset-y-0 left-1/2 z-0 w-[560px] -translate-x-1/2 bg-cream/55 blur-2xl" />
-
-      {/* sticky mini header */}
-      <AnimatePresence>
-        {scrolled && (
-          <motion.div
-            initial={{ y: -60, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -60, opacity: 0 }}
-            className="fixed inset-x-0 top-0 z-30 border-b border-hush/70 bg-cream/85 backdrop-blur-md"
-          >
-            <div className="mx-auto flex max-w-[440px] items-center gap-3 px-5 py-3">
-              <img
-                src={HEADER.photo}
-                alt=""
-                className="h-9 w-9 rounded-full object-cover"
-              />
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-[14px] font-semibold text-ink2">
-                  {HEADER.fullName}
-                </p>
-                <p className="truncate text-[12px] text-muted">{HEADER.role}</p>
-              </div>
-              <a
-                href={CONTACT.resume}
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-full bg-ink2 px-3.5 py-2 text-[12.5px] font-semibold text-cream"
-              >
-                Résumé
-              </a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* deck */}
-      <main className="relative z-10 mx-auto w-full max-w-[440px] px-4 pb-40 pt-6">
-        <p className="mb-4 text-center text-[12px] font-medium uppercase tracking-[0.2em] text-muted/80">
-          Software engineer · 1 of 1 nearby
-        </p>
-
-        <div className="space-y-6">
-          {CARDS.map((card) => (
-            <div key={card.id}>{renderCard(card)}</div>
-          ))}
-        </div>
-
-        <footer className="mt-10 text-center text-[12.5px] leading-relaxed text-muted/80">
-          <p>
-            Built by {HEADER.fullName} — React, React Three Fiber, and an
-            Anthropic-powered agent.
-          </p>
-          <p className="mt-1">
-            <a
-              href="https://github.com/RonnieArnab/portfolio-website"
-              target="_blank"
-              rel="noreferrer"
-              className="underline underline-offset-2 hover:text-blush"
-            >
-              Source
-            </a>
-            {" · "}
-            <a href="/rpg" className="underline underline-offset-2 hover:text-blush">
-              Play the RPG version
-            </a>
-          </p>
-        </footer>
-      </main>
-
-      {/* action bar */}
-      <div className="fixed inset-x-0 bottom-0 z-30 flex justify-center pb-6 pt-10 bg-gradient-to-t from-cream via-cream/85 to-transparent">
-        <div className="flex items-center gap-4">
-          <button
-            onClick={pass}
-            aria-label="Pass"
-            className="round-btn h-14 w-14 text-muted"
-          >
-            <Ico name="x" size={26} />
-          </button>
-
-          <button
-            onClick={() => setSheet("chat")}
-            className="round-btn h-16 gap-2 rounded-full px-6 text-ink2"
-          >
-            <span className="flex items-center gap-2">
-              <Ico name="chat" size={21} className="text-blush" />
-              <span className="text-[14.5px] font-semibold">Ask about me</span>
-            </span>
-          </button>
-
-          <button
-            onClick={() => {
-              setMatchLabel(null);
-              setSheet("match");
-            }}
-            aria-label="Like"
-            className="round-btn h-14 w-14 bg-blush text-white shadow-heart"
-          >
-            <Ico name="heart" size={24} />
-          </button>
-        </div>
-      </div>
-
-      {/* pass toast */}
-      <AnimatePresence>
-        {passIdx >= 0 && (
-          <motion.p
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 20, opacity: 0 }}
-            className="fixed bottom-28 left-1/2 z-40 -translate-x-1/2 rounded-full bg-ink2 px-5 py-2.5 text-[13.5px] font-medium text-cream shadow-lift"
-          >
-            {PASS_LINES[passIdx]}
-          </motion.p>
-        )}
-      </AnimatePresence>
-
-      {/* overlays */}
-      <AnimatePresence>
-        {sheet === "chat" && <AgentChat key="chat" onClose={() => setSheet(null)} />}
-        {sheet === "match" && (
-          <MatchOverlay
-            key="match"
-            likedLabel={matchLabel}
-            reduced={!!reduced}
-            onClose={() => setSheet(null)}
-          />
-        )}
-      </AnimatePresence>
-    </div>
-  );
+  function like(text) { setLabel(text); setLikes(previous => previous.includes(text) ? previous : [...previous, text]); setSheet("match"); }
+  function next(delta) { setPrompt(i => (i + delta + PROMPTS.length) % PROMPTS.length); }
+  return <div className="match-portfolio">
+    <a className="skip-content" href="#discover">Skip to profile</a>
+    <header className="match-nav"><a className="match-wordmark" href="#discover">arnab<span>.</span><small>made for a good match</small></a><nav aria-label="Portfolio sections">{[["discover", "Discover"], ["work", "My work"], ["timeline", "Experience"], ["skills", "Skills"]].map(([id, name]) => <a key={id} href={`#${id}`} aria-current={nav === id ? "location" : undefined} className={nav === id ? "active" : ""} onClick={() => setNav(id)}>{name}</a>)}</nav><button className="nav-contact" onClick={() => like(null)}>Let’s talk <Ico name="arrow" size={18} /></button></header>
+    <main>
+      <section className="discover-section" id="discover">
+        <div className="discover-topline"><span><i /> ONE OF ONE. OPEN TO WHAT'S NEXT.</span><span>More personality. Less PDF.</span></div>
+        <div className="discover-grid"><PhotoGallery onLike={like} /><div className="profile-introduction">
+          <p className="match-eyebrow">MEET YOUR NEXT TEAMMATE</p><h1>Good at code.<br /><em>Better in a team.</em></h1>
+          <p className="profile-bio">Hey, I'm Arnab — a software engineer who builds production AI systems, explores new places, and never says no to a good view.</p>
+          <div className="profile-facts"><span><Ico name="work" size={15} /> GenAI engineer</span><span><Ico name="pin" size={15} /> India · Remote</span><span><Ico name="school" size={15} /> VIT Vellore</span></div>
+          <div className="hinge-prompt" aria-live="polite" onPointerDown={e => { swipe.current = e.clientX; }} onPointerCancel={() => { swipe.current = null; }} onPointerUp={e => { if (swipe.current !== null && Math.abs(e.clientX - swipe.current) > 45) next(e.clientX < swipe.current ? 1 : -1); swipe.current = null; }}>
+            <AnimatePresence mode="wait" initial={false}><motion.div key={prompt} initial={{ opacity: reduced ? 1 : 0, y: reduced ? 0 : 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: reduced ? 1 : 0 }} transition={{ duration: .15 }}><p>{PROMPTS[prompt].question}</p><h2>{PROMPTS[prompt].answer}</h2><span>{PROMPTS[prompt].detail}</span></motion.div></AnimatePresence>
+            <div className="prompt-bottom"><div className="prompt-dots">{PROMPTS.map((p, i) => <button key={p.question} aria-label={`Read prompt ${i + 1}`} aria-pressed={i === prompt} onClick={() => setPrompt(i)}><span /></button>)}</div><button aria-label="Like this prompt" className={likes.includes(PROMPTS[prompt].answer) ? "liked" : ""} onClick={() => like(PROMPTS[prompt].answer)}><Ico name="heart" size={21} /></button></div>
+          </div>
+          <div className="profile-prompt-actions"><div className="prompt-navigation"><button aria-label="Previous prompt" onClick={() => next(-1)}><span aria-hidden="true">←</span> Previous</button><button aria-label="Next prompt" onClick={() => next(1)}>Next <span aria-hidden="true">→</span></button></div><button className="profile-chat" onClick={() => setSheet("chat")}><Ico name="chat" size={19} /> Ask about my work</button></div>
+          <p className="profile-microcopy">Looking for a good team, an interesting problem, and a chance to build.</p>
+        </div></div>
+      </section>
+      <div className="personality-strip"><span>BUILDING THINGS THAT MATTER</span><p>Python at work.<b>✦</b>New places after hours.<b>✦</b>Curious everywhere.</p><a href={CONTACT.resume} target="_blank" rel="noreferrer">The traditional résumé ↗</a></div>
+      <section id="work" className="match-section"><div className="match-section-heading"><div><p className="match-eyebrow">A LITTLE PROOF OF CHEMISTRY</p><h2>Things I've <em>put my heart into.</em></h2></div><p>Real problems. Thoughtful systems. <br />The details that make them work.</p></div><ProjectStories onLike={like} /></section>
+      <section id="timeline" className="match-section timeline-section"><div className="match-section-heading"><div><p className="match-eyebrow">THE STORY SO FAR</p><h2>Always a work <em>in progress.</em></h2></div><p>From learning the fundamentals <br />to shipping them at scale.</p></div><CareerTimeline /></section>
+      <section id="skills" className="match-section skill-section"><div className="match-section-heading"><div><p className="match-eyebrow">WHAT I BRING TO THE TEAM</p><h2>Useful skills. <em>Real applications.</em></h2></div><p>The tools matter. <br />What they help people do matters more.</p></div><SkillsOverview /></section>
+      <section className="last-prompt" id="contact"><p className="match-eyebrow">YOUR MOVE</p><h2>Think we'd make <em>a good team?</em></h2><p>Tell me what you're building. I'd love to hear about it.</p><button onClick={() => like("building something together")}>Let's make it a match <Ico name="heart" size={18} /></button></section>
+    </main>
+    <footer className="match-footer"><span>© {new Date().getFullYear()} {HEADER.fullName} · Made with curiosity.</span><div><a href="https://github.com/RonnieArnab" target="_blank" rel="noreferrer">GitHub ↗</a><a href={CONTACT.resume} target="_blank" rel="noreferrer">Résumé ↗</a><a href="mailto:as920037.arnabghosh@gmail.com">Say hello ↗</a></div></footer>
+    <AnimatePresence>{sheet === "chat" && <AgentChat key="chat" onClose={() => setSheet(null)} />}{sheet === "match" && <MatchOverlay key="match" likedLabel={label} reduced={!!reduced} onClose={() => setSheet(null)} />}</AnimatePresence>
+  </div>;
 }
